@@ -23,7 +23,7 @@ impl Error for EnumTryFromError {}
 pub mod bi_enum {
     #[macro_export]
     macro_rules! bi_enum {    
-        ($(#[$derives:meta])* $vis:vis enum $name:ident <=> $type:tt {$($(#[$field_derives:meta])* $field_name:ident <=> $val:expr )*}) => {
+        ($(#[$derives:meta])* $vis:vis enum $name:ident <=> $type:tt {$($(#[$field_derives:meta])* $field_name:ident <=> $val:expr),*}) => {
             $(#[$derives])*
             $vis enum $name {
                 $(
@@ -43,7 +43,7 @@ pub mod bi_enum {
             impl TryFrom<$type> for $name {
                 type Error = $crate::EnumTryFromError;
     
-                fn try_from(try_from: char) -> Result<Self, Self::Error> {
+                fn try_from(try_from: $type) -> Result<Self, Self::Error> {
                     match try_from {
                         $($val => Ok($name::$field_name),)*
                         _ => Err($crate::EnumTryFromError::new(stringify!($type).to_string(), stringify!($name).to_string()))

@@ -12,7 +12,7 @@ bi_enum! {
     #[derive(Debug)]
     enum SomeEnum <=> char 
     {
-        T1 <=> 'a'
+        T1 <=> 'a',
         T2 <=> 'b'
     }
 }
